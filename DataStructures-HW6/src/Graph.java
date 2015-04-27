@@ -1,11 +1,17 @@
 import java.util.List;
 
-
+/**
+ * Graph interface with generic nodes.
+ * 
+ * @author hipstorian
+ *
+ * @param <T>
+ *            Node type.
+ */
 public interface Graph<T> {
 	
 	/**
 	 * Add an edge to the graph.
-	 * @param <T> type parameter
 	 * 
 	 * @param start
 	 *            the starting node
@@ -14,36 +20,36 @@ public interface Graph<T> {
 	 * @param weight
 	 *            the weight of the node. Default is 1 (all equal)
 	 */
-	public void addEdge(T start, T end, int weight);
+	void addEdge(T start, T end, int weight);
 	
 	/**
 	 * Removes an edge to the graph.
-	 * @param <T> type parameter
 	 * 
 	 * @param start
 	 *            the starting node
 	 * @param end
 	 *            the end node
 	 */
-	public void removeEdge(T start, T end);
+	void removeEdge(T start, T end);
 	
 	/**
-	 * Gets the weight of specified edge
-	 * @param <T> type parameter
+	 * (Optional, return dummy if does not apply).
+	 * Gets the weight of specified edge.
 	 * 
 	 * @param start
 	 *            the starting node
 	 * @param end
 	 *            the end node
+	 * @return weight of edge
 	 */
-	public int getWeight(T start, T end);
+	int getWeight(T start, T end);
 	
 	/**
-	 * Returns a list of neighbor vertecies
-	 * @param <T> type parameter
+	 * Returns a list of neighbor vertices.
 	 * 
 	 * @param node
 	 *            the node of interest
+	 * @return list of neighbors of a node
 	 */
-	public List<T> getNeighbors(int node);
+	List<T> getNeighbors(int node);
 }

@@ -46,9 +46,11 @@ public class GraphWrapper<T> {
      * @param element being added to the graph.
      */
     public void addVertex(T element) {
-        this.keys.add(element);
-        this.vtcs.put(element, this.graph.getNumVerts());
-        this.graph.addVertex();
+        if (!this.vtcs.containsKey(element)) {
+            this.keys.add(element);
+            this.vtcs.put(element, this.graph.getNumVerts());
+            this.graph.addVertex();
+        }
     }
     
     /**

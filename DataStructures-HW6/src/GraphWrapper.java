@@ -116,5 +116,4 @@ public class GraphWrapper<T> {
     public int getWeight(T vtx1, T vtx2) {
         return this.graph.getWeight(this.vtcs.get(vtx1), this.vtcs.get(vtx2));
     }
-    
 }

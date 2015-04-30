@@ -94,12 +94,14 @@ public class MinHeapTest {
         assertEquals(5, (int) minPair.get(0));
         assertEquals(5, (int) minPair.get(1));
         assertEquals(5, heap2.size());
+        assertEquals(0,(int) heap2.map.get(0));
         
         minPair = heap2.getMin();
         
         assertEquals(10, (int) minPair.get(0));
         assertEquals(0, (int) minPair.get(1));
         assertEquals(4, heap2.size());
+        assertEquals(0, (int) heap2.map.get(4));
         
         minPair = heap2.getMin();
 
@@ -107,6 +109,30 @@ public class MinHeapTest {
         assertEquals(15, (int) minPair.get(0));
         assertEquals(4, (int) minPair.get(1));
         assertEquals(3, heap2.size());
+        
+        assertEquals(0, (int) heap2.map.get(1));
+
+        minPair = heap2.getMin();
+        
+        assertEquals(20, (int) minPair.get(0));
+        assertEquals(1, (int) minPair.get(1));
+        assertEquals(2, heap2.size());
+        assertEquals(0, (int) heap2.map.get(3));
+        
+        minPair = heap2.getMin();
+        
+        assertEquals(25, (int) minPair.get(0));
+        assertEquals(3, (int) minPair.get(1));
+        assertEquals(1, heap2.size());
+        assertEquals(0, (int) heap2.map.get(2));
+        
+        minPair = heap2.getMin();
+        
+        assertEquals(30, (int) minPair.get(0));
+        assertEquals(2, (int) minPair.get(1));
+        assertEquals(0, heap2.size());
+        
+        
     }
 
     @Test
@@ -138,9 +164,7 @@ public class MinHeapTest {
         LinkedList<LinkedList<Integer>> minPath;
         
         DijkstraMinPath pather = new DijkstraMinPath(graph);
-        
-        System.out.println("\n");
-        
+           
         minPath = pather.getMinPath(0, 4);
         
         for (LinkedList<Integer> x : minPath) {

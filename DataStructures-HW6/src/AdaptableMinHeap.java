@@ -72,16 +72,12 @@ public class AdaptableMinHeap {
      * @param vtx The corresponding vertex that goes with value.
      */
     public void add(int element, int vtx) {
-        
-        System.out.println("Entered Add.");
-        
+                
         if (this.map.containsKey(vtx)) {
             this.updateDistance(element, vtx);
             return;
         }
-        
-        System.out.println("Added " + element + " " + vtx);
-        
+                
         this.heap[this.size()] = element;
         this.verts[this.size()] = vtx;
         this.map.put(vtx, this.size());
@@ -107,6 +103,54 @@ public class AdaptableMinHeap {
         }
     }
     /**
+     * Bubbles down a vertex to its appropriate position. 
+     * @param pos The vertext to bubble. 
+     */
+    private void bubbleDown(int pos) {
+        int childPos = this.getLeftChild(pos);
+        int temp, temp2;
+        
+        if (childPos + 1 > this.size()) {
+            return;
+        } else if (this.heap[pos] < this.heap[childPos]
+                && this.heap[pos] < this.heap[childPos + 1]) {
+            return;
+        } else {
+            if (this.heap[childPos] < this.heap[childPos + 1]) {
+                temp = this.heap[pos]; 
+                temp2 = this.verts[pos];
+                
+                this.heap[pos] = this.heap[childPos];
+                this.verts[pos] = this.verts[childPos];
+                
+                this.heap[childPos] = temp;
+                this.verts[childPos] = temp2;
+                
+                this.bubbleDown(childPos);
+                
+                this.map.put(this.verts[pos], pos);
+                
+            } else {
+                childPos = childPos + 1;
+                
+                temp = this.heap[pos];
+                temp2 = this.verts[pos];
+                
+                this.heap[pos] = this.heap[childPos];
+                this.verts[pos] = this.verts[childPos];
+                
+                this.heap[childPos] = temp;
+                this.verts[childPos] = temp2;
+                
+                this.bubbleDown(childPos);
+                
+                this.map.put(this.verts[pos], pos);
+
+            }
+        }
+    }
+    
+    /**
      * Returns the min value of the heap.
      * Modifies the resulting heap so that it satisfies heap property. 
      * @return The min value of the heap.
@@ -124,68 +168,14 @@ public class AdaptableMinHeap {
         
         
         this.heap[0] = this.heap[this.getLastPos()];
-        this.verts[0] = this.heap[this.getLastPos()];
+        this.verts[0] = this.verts[this.getLastPos()];
         this.map.put(this.verts[0],  0);
         
-        int index = 0;
-        int temp, temp2;
-      
-        /*
-        if (this.getLeftChild(index) + 1 >= this.size()) {
-            if (this.heap[index] > this.heap[this.getLeftChild(index)]) {
-                temp = this.heap[index];
-                this.heap[index = this.heap[this.g]]
-            }
-            this.currSize--;
-            return min;
-        }
-        */
-        
-        //Bubble down
-        while (this.heap[index] > this.heap[this.getLeftChild(index)] 
-                || this.heap[index] > this.heap[this.getLeftChild(index) + 1]) {
-            if (this.heap[this.getLeftChild(index)] 
-                    <= this.heap[this.getLeftChild(index) + 1]) {
-                
-                temp = this.heap[index];
-                temp2 = this.verts[index];
-                
-                this.heap[index] = this.heap[this.getLeftChild(index)];
-                this.verts[index] = this.verts[this.getLeftChild(index)];
-                this.map.put(this.verts[index], index);
-                
-                this.heap[this.getLeftChild(index)] = temp;
-                this.verts[this.getLeftChild(index)] = temp2;
-                this.map.put(temp2, this.getLeftChild(index));
-                
-                index = this.getLeftChild(index);
-                if (index >= this.size()) {
-                    break;
-                }
-            } else {
-                temp = this.heap[index];
-                temp2 = this.verts[index];
-
-                this.heap[index] = this.heap[this.getLeftChild(index) + 1];
-                this.verts[index] = this.verts[this.getLeftChild(index) + 1];
-                this.map.put(this.verts[index], index);
-
-
-                this.heap[this.getLeftChild(index) + 1] = temp;
-                this.verts[this.getLeftChild(index) + 1] = temp2;
-                this.map.put(temp2, this.getLeftChild(index) + 1);
-
-                
-                index = this.getLeftChild(index) + 1;
-                if (index >= this.size()) {
-                    break;
-                }
-            }
-        }
-        
         this.heap[this.getLastPos()] = Integer.MAX_VALUE;
-        
         this.currSize--;
+
+        this.bubbleDown(0);
+        
         return minPair;
     }
     
@@ -228,7 +218,7 @@ public class AdaptableMinHeap {
         if (!this.map.containsKey(vertex)) {
             return;
         }
-        
+                
         int index = this.map.get(vertex);        
         this.heap[index] = newDistance;
         

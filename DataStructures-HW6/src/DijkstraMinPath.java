@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-import java.util.ArrayList;
 
 /**
  * A class to find shortest weight paths.
@@ -67,22 +66,27 @@ public class DijkstraMinPath {
         
         this.lowestDistance.add(0, vtx1); //start
         LinkedList<Integer> x, temp;
-        ArrayList<Integer> neighbors;
         int dist;
         
         for (int i = 0; i < this.graph.getNumVerts(); i++) {
+            if (this.lowestDistance.size() == 0) {
+                break;
+            }
             
             x = this.lowestDistance.getMin();
             this.found[x.get(1)] = true;
             
-            for (int j : this.graph.getNeighbors(x.get(1))) {
-                
+            for (int v : this.graph.getNeighbors(x.get(1))) {
+                dist = x.get(0) + this.graph.getWeight(x.get(1), v);
+                if (!this.found[v]) {
+                    if (dist < this.distance[v]) {
+                        this.distance[v] = dist;
+                        this.prev[v] = x.get(1);
+                        this.lowestDistance.add(dist, v);
+                    }
+                }
             }
-            
-            
         }
-        
-        
         
         int vtx = vtx2;
         while (vtx != vtx1) {
@@ -93,6 +97,7 @@ public class DijkstraMinPath {
             output.addFirst(temp);
             
             vtx = this.prev[vtx];
+            
         }
         temp = new LinkedList<Integer>();
         temp.addLast(vtx);

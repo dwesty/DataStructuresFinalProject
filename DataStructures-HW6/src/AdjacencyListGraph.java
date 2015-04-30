@@ -16,7 +16,6 @@ public class AdjacencyListGraph {
     /**
      * The adjacency list used to describe the graph.
      */
-    
     ArrayList<LinkedList<Integer>> graph;
     
     /**

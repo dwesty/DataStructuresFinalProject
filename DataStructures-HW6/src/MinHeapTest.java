@@ -175,4 +175,33 @@ public class MinHeapTest {
         
     }
     
+    @Test
+    public void primsMSTTest() {
+        
+        AdjacencyListGraph graph = new AdjacencyListGraph(0);
+        AdjacencyListGraph MST;
+        
+        for (int i = 0; i < 5; i++) {
+            graph.addVertex();
+        }
+        
+        graph.addEdge(0,1,1);
+        graph.addEdge(1,2,8);
+        graph.addEdge(2,3,4);
+        graph.addEdge(3,4,4);
+        graph.addEdge(0,4,18);
+        
+        PrimMST primmer = new PrimMST(graph);
+        
+        MST = primmer.getMST(0);
+        
+        for (int i = 0; i < MST.getNumVerts(); i++) {
+            for (int x : MST.getNeighbors(i)) {
+                System.out.println("Vertex " + i + " is connect to " + x + ".");
+            }
+        }
+        
+        
+    }
+    
 }

@@ -1,12 +1,12 @@
 import java.util.LinkedList;
 
 /**
- * A class to find shortest weight paths.
+ * A class to find MSTs.
  */
-public class DijkstraMinPath {
+public class PrimMST {
     
     /**
-     * The graph to find the MinPath on.
+     * The graph to find the MST on.
      */
     AdjacencyListGraph graph;
     
@@ -36,7 +36,7 @@ public class DijkstraMinPath {
      * Constructor for DijkstraMinPath. 
      * @param input The graph we're finding MinPaths in.
      */
-    DijkstraMinPath(AdjacencyListGraph input) {
+    PrimMST(AdjacencyListGraph input) {
         this.graph = input;
         
         this.found = new Boolean[input.getNumVerts()];
@@ -52,21 +52,15 @@ public class DijkstraMinPath {
         }
     }
     /**
-     * Gets the shortest path between the vertices using Dijkstra's Algorithm.
-     * O(MlogN)
-     * @param vtx1 The start vertex. 
-     * @param vtx2 The target vertex. 
-     * @return A linked list containing all 
-     * (vertex, distance) pairs in the path.
+     * Gets the MST sourced from the start node using Prim's Algorithm.
+     * @param vtx The start vertex. 
+     * @return A graph containing the min spanning tree.  
      */
-    public LinkedList<LinkedList<Integer>> getMinPath(int vtx1, int vtx2) {
+    public AdjacencyListGraph getMST(int vtx) {
         
-        LinkedList<LinkedList<Integer>> output = 
-                new LinkedList<LinkedList<Integer>>();
-        
-        this.lowestDistance.add(0, vtx1); //start
-        LinkedList<Integer> x, temp;
-        int dist;
+        this.lowestDistance.add(0, vtx); //start
+        LinkedList<Integer> x;
+        int weight;
         
         for (int i = 0; i < this.graph.getNumVerts(); i++) {
             if (this.lowestDistance.size() == 0) {
@@ -77,33 +71,29 @@ public class DijkstraMinPath {
             this.found[x.get(1)] = true;
             
             for (int v : this.graph.getNeighbors(x.get(1))) {
-                dist = x.get(0) + this.graph.getWeight(x.get(1), v);
+                weight = this.graph.getWeight(x.get(1), v);
                 if (!this.found[v]) {
-                    if (dist < this.distance[v]) {
-                        this.distance[v] = dist;
+                    if (weight < this.distance[v]) {
+                        this.distance[v] = weight;
                         this.prev[v] = x.get(1);
-                        this.lowestDistance.add(dist, v);
+                        this.lowestDistance.add(weight, v);
                     }
                 }
             }
         }
         
-        int vtx = vtx2;
-        while (vtx != vtx1) {
-            temp = new LinkedList<Integer>();
-            temp.addLast(vtx);
-            temp.addLast(this.graph.getWeight(this.prev[vtx], vtx));
-            temp.addLast(this.distance[vtx]);
-            output.addFirst(temp);
-            
-            vtx = this.prev[vtx];
-            
+        AdjacencyListGraph output = new AdjacencyListGraph(0);
+        
+        for (int i = 0; i < this.graph.getNumVerts(); i++) {
+            output.addVertex();
         }
-        temp = new LinkedList<Integer>();
-        temp.addLast(vtx);
-        temp.addLast(0);
-        temp.addLast(0);
-        output.addFirst(temp);
+    
+        for (int i = 0; i < this.graph.getNumVerts(); i++) {
+            if (this.prev[i] != null) {
+                output.addEdge(i, this.prev[i], 
+                        this.graph.getWeight(i, this.prev[i]));
+            }
+        }
         
         return output;
     }

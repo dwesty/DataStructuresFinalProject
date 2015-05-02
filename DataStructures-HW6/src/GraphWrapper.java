@@ -139,8 +139,7 @@ public class GraphWrapper<T> {
             LinkedList<LinkedList<Integer>> curPath =
                     findPath.nearestNeighbors(this.vtcs.get(key));
              
-            int tempPathWork = curPath.get(0).get(3);
-            //you're a muggle checkstyle ^^
+            int tempPathWork = curPath.get(0).get(2);
             
             if (isFirst || tempPathWork < minPathWork) {
                 shortestPath = curPath;

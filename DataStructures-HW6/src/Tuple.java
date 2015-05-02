@@ -10,23 +10,23 @@
  */
 public class Tuple<X, Y> { 
     /**
-     * x-coordinate type.
+     * x-coordinate of type X.
      */
     public final X x; 
     
     /**
-     * y-coordinate type.
+     * y-coordinate of type Y.
      */
     public final Y y; 
     
     /**
      * Default constructor.
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * @param xCoord the x coordinate
+     * @param yCoord the y coordinate
      */
-    public Tuple(X x, Y y) { 
-        this.x = x; 
-        this.y = y; 
+    public Tuple(X xCoord, Y yCoord) { 
+        this.x = xCoord; 
+        this.y = yCoord; 
     }
 
     @Override

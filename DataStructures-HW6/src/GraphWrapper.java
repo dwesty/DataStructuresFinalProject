@@ -1,5 +1,10 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.Map;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 /**
  * A class that maps the name of vtces to the graph representation.
@@ -119,10 +124,34 @@ public class GraphWrapper<T> {
     
     /**
      * Finds the overall shortest path.
-     * 
+     * @return arrayList of vertecies in order of lowest
      */
-    public ArrayList<T> shortestPath() {
-        //for verteces in hashmap
+    public LinkedList<LinkedList<Integer>> shortestPath() {
+        LinkedList<LinkedList<Integer>> shortestPath =
+                new LinkedList<LinkedList<Integer>>();
+        int leastWork;
+        DijkstraMinPath dijk = new DijkstraMinPath(this.graph);
+        
+        //for vertices in hashmap
+        for (T key: this.vtcs.keySet()) {
+            LinkedList<LinkedList<Integer>> curPath =
+                    dijk.getMinPathAll(this.vtcs.get(key));
+            
+            int curWork;
+            ListIterator<LinkedList<Integer>> listIterator =
+                    curPath.listIterator();
+            while (listIterator.hasNext()) {
+                /**
+                 * TODO: Get the work with the path
+                 */
+                curWork = 1; //CHANGE!!
+            }
+            if (curWork < leastWork) {
+                shortestPath = curPath;
+            }
+        }
+        return shortestPath;
+        
         //   perform Dijkstra (single source)
         
     }

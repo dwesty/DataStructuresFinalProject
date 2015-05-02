@@ -107,4 +107,60 @@ public class DijkstraMinPath {
         
         return output;
     }
+    
+    /**
+     * Gets the shortest path that hits all vertecies.
+     * O(MlogN)
+     * @param vtx1 The start vertex. 
+     * @return A linked list containing all 
+     * (vertex, distance) pairs in the path.
+     */
+    public LinkedList<LinkedList<Integer>> getMinPathAll(int vtx1) {
+        
+        LinkedList<LinkedList<Integer>> output = 
+                new LinkedList<LinkedList<Integer>>();
+        
+        this.lowestDistance.add(0, vtx1); //start
+        LinkedList<Integer> x, temp;
+        int dist;
+        
+        for (int i = 0; i < this.graph.getNumVerts(); i++) {
+            if (this.lowestDistance.size() == 0) {
+                break;
+            }
+            
+            x = this.lowestDistance.getMin();
+            this.found[x.get(1)] = true;
+            
+            for (int v : this.graph.getNeighbors(x.get(1))) {
+                dist = x.get(0) + this.graph.getWeight(x.get(1), v);
+                if (!this.found[v]) {
+                    if (dist < this.distance[v]) {
+                        this.distance[v] = dist;
+                        this.prev[v] = x.get(1);
+                        this.lowestDistance.add(dist, v);
+                    }
+                }
+            }
+        }
+        
+        int vtx = vtx2;
+        while (vtx != vtx1) {
+            temp = new LinkedList<Integer>();
+            temp.addLast(vtx);
+            temp.addLast(this.graph.getWeight(this.prev[vtx], vtx));
+            temp.addLast(this.distance[vtx]);
+            output.addFirst(temp);
+            
+            vtx = this.prev[vtx];
+            
+        }
+        temp = new LinkedList<Integer>();
+        temp.addLast(vtx);
+        temp.addLast(0);
+        temp.addLast(0);
+        output.addFirst(temp);
+        
+        return output;
+    }
 }

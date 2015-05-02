@@ -2,6 +2,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 /**
@@ -40,12 +42,12 @@ public final class BackyardDig {
                 HashMap<Integer, Tuple<Integer, Integer>>();
         //Creat array list with initial capacity of 0
         ArrayList<Integer> nodesAdded = new ArrayList<Integer>(0);
+        AdjacencyListGraph graph = new AdjacencyListGraph(0);
         
         try {
             Scanner reader = new Scanner(new FileInputStream(args[0]));
             rows = reader.nextInt();
             cols = reader.nextInt();
-            AdjacencyListGraph graph = new AdjacencyListGraph(0);
             
             while (reader.hasNext()) {
                 
@@ -61,15 +63,6 @@ public final class BackyardDig {
                 int yEnd = reader.nextInt();
                 int weight = reader.nextInt();
                 
-                //Create Tuples from coords
-//                Tuple<Integer, Integer> start = new
-//                        Tuple<Integer, Integer>(xStart, yStart);
-//                Tuple<Integer, Integer> end = new
-//                        Tuple<Integer, Integer>(xEnd, yEnd);
-//                
-//                map.put(start.hashCode(), start);
-//                map.put(end.hashCode(), end);
-                
                 int startVertex = xStart * cols + yStart;
                 int endVertex = xEnd * cols + yEnd;
                 graph.addEdge(startVertex, endVertex, weight);
@@ -79,8 +72,14 @@ public final class BackyardDig {
             System.out.println("File not found.");
         }   
         
-        // Find shortest path
-        for 
+        GraphWrapper<Integer> graphWrap = new GraphWrapper<Integer>(graph);
+        LinkedList<LinkedList<Integer>> minPath = graphWrap.shortestPath();
+        
+        System.out.println("Shortest Path: ");
+        ListIterator<LinkedList<Integer>> listIterator = minPath.listIterator();
+        while (listIterator.hasNext()) {
+            System.out.println(listIterator.next());
+        } 
         
 
     }

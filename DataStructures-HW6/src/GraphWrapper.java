@@ -129,26 +129,20 @@ public class GraphWrapper<T> {
     public LinkedList<LinkedList<Integer>> shortestPath() {
         LinkedList<LinkedList<Integer>> shortestPath =
                 new LinkedList<LinkedList<Integer>>();
-        int leastWork = 0;
-        DijkstraMinPath dijk = new DijkstraMinPath(this.graph);
+        TSP findPath = new TSP(this.graph);
         
-        //for vertices in hashmap
+        Integer minPathWork = Integer.MAX_VALUE;
+        
+        //start at all vertices in hashmap
         for (T key: this.vtcs.keySet()) {
             boolean isFirst = true;
             LinkedList<LinkedList<Integer>> curPath =
-                    dijk.getMinPathSingle(this.vtcs.get(key));
+                    findPath.nearestNeighbors(this.vtcs.get(key));
+             
+            int tempPathWork = curPath.get(0).get(3);
+            //you're a muggle checkstyle ^^
             
-            int curWork = 0;
-            ListIterator<LinkedList<Integer>> listIterator =
-                    curPath.listIterator();
-            while (listIterator.hasNext()) {
-                int curWeight = listIterator.next().get(2);
-                int curDist = listIterator.next().get(3);
-                //sorry you're a muggle checkstyle :(
-                
-                curWork += curWeight * curDist;
-            }
-            if (isFirst || curWork < leastWork) {
+            if (isFirst || tempPathWork < minPathWork) {
                 shortestPath = curPath;
             }
             isFirst = false;

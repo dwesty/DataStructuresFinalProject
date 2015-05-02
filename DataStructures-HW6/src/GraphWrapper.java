@@ -137,14 +137,13 @@ public class GraphWrapper<T> {
             LinkedList<LinkedList<Integer>> curPath =
                     dijk.getMinPathAll(this.vtcs.get(key));
             
-            int curWork;
+            int curWork = 0;
             ListIterator<LinkedList<Integer>> listIterator =
                     curPath.listIterator();
             while (listIterator.hasNext()) {
-                /**
-                 * TODO: Get the work with the path
-                 */
-                curWork = 1; //CHANGE!!
+                int curWeight = listIterator.next().get(2);
+                int curDist = listIterator.next().get(3);
+                curWork += curWeight * curDist;
             }
             if (curWork < leastWork) {
                 shortestPath = curPath;

@@ -115,7 +115,7 @@ public class DijkstraMinPath {
      * @return A linked list containing all 
      * (vertex, distance) pairs in the path.
      */
-    public LinkedList<LinkedList<Integer>> getMinPathAll(int vtx1) {
+    public LinkedList<LinkedList<Integer>> getMinPathSingle(int vtx1) {
         
         LinkedList<LinkedList<Integer>> output = 
                 new LinkedList<LinkedList<Integer>>();
@@ -144,6 +144,9 @@ public class DijkstraMinPath {
             }
         }
         
+        /**
+         * TODO: Keep going until every vertex has been seen
+         */
         int vtx = vtx2;
         while (vtx != vtx1) {
             temp = new LinkedList<Integer>();

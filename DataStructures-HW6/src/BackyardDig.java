@@ -99,13 +99,14 @@ public final class BackyardDig {
             }
         }
         
-        System.out.println("Least Work: " + minWeight);
-        System.out.println(bestMST.getAdjList());
+//        System.out.println("Least Work: " + minWeight);
+//        System.out.println(bestMST.getAdjList());
+        
+        ArrayList<LinkedList<Integer>> tempAdjList = bestMST.getAdjList();
         
         FileWriter writer = new FileWriter("OutputTest.txt");
         BufferedWriter bw = new BufferedWriter(writer);
-        
-        ArrayList<LinkedList<Integer>> tempAdjList = bestMST.getAdjList();
+        bw.write(minWeight + "\n\n");
         
         int curVert = 0;
         for (LinkedList<Integer> adjVtcs : tempAdjList) {
@@ -120,20 +121,17 @@ public final class BackyardDig {
                 int xEnd = adjVtcs.get(i) / cols;
                 int yEnd = (adjVtcs.get(i) % cols);
                 
-                try {
-                    String first =
-                            new String("(" + xStart + ", " + yStart + ")");
-                    String second = new String("(" + xEnd + ", " + yEnd + ")");
-                    System.out.print(first);
-                    System.out.println(second);
-                    bw.write(first + " ");
-                    bw.write(second + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                String first =
+                        new String("(" + xStart + ", " + yStart + ")");
+                String second = new String("(" + xEnd + ", " + yEnd + ")");
+//                System.out.print(first);
+//                System.out.println(second);
+                bw.write(first + " ");
+                bw.write(second + "\n");
             }
             curVert++;
         }
+        bw.close();
         
     }
     

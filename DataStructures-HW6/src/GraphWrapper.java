@@ -149,4 +149,12 @@ public class GraphWrapper<T> {
         return shortestPath;
         
     }
+    
+    /**
+     * Returns the AdjacencyListGraph contained within.
+     * @return the AdjacencyListGraph inside
+     */
+    public AdjacencyListGraph getGraph() {
+        return this.graph;
+    }
 }

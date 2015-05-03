@@ -38,10 +38,7 @@ public final class BackyardDig {
         
         int rows;
         int cols;
-        HashMap<Integer, Tuple<Integer, Integer>> map = new
-                HashMap<Integer, Tuple<Integer, Integer>>();
-        //Creat array list with initial capacity of 0
-        ArrayList<Integer> nodesAdded = new ArrayList<Integer>(0);
+        HashMap<Integer, Integer> vtcs = new HashMap<Integer, Integer>();
         GraphWrapper<Integer> graph =
                 new GraphWrapper<Integer>(new AdjacencyListGraph(0));
         
@@ -66,8 +63,10 @@ public final class BackyardDig {
                 int yEnd = Integer.parseInt(second.substring(3, 4));
                 int weight = reader.nextInt();
                 
-                int startVertex = xStart * cols + (yStart + 1);
-                int endVertex = xEnd * cols + (yEnd + 1);
+                Integer startVertex = xStart * cols + (yStart + 1);
+                Integer endVertex = xEnd * cols + (yEnd + 1);
+                vtcs.put(startVertex.hashCode(), startVertex);
+                vtcs.put(endVertex.hashCode(), endVertex);
 //                System.out.println(startVertex + ", " + endVertex);
                 
                 graph.addVertex(startVertex);
@@ -79,8 +78,28 @@ public final class BackyardDig {
             System.out.println("File not found.");
         }   
         
-        PrimMST mst = new PrimMST(graph);
+        AdjacencyListGraph bestMST;
+        Integer minWeight = Integer.MAX_VALUE;
         
+        PrimMST calcMST = new PrimMST(graph.getGraph());
+        AdjacencyListGraph mst = calcMST.getMST(13);
+        Integer curWeight = mst.getTotalWeight();
+        minWeight = curWeight;
+        bestMST = mst;
+        
+        //find the best MST of all starting points
+//        for (int vtx : vtcs.values()) {
+//            System.out.println(vtx);
+//            PrimMST calcMST = new PrimMST(graph.getGraph());
+//            AdjacencyListGraph mst = calcMST.getMST(vtx);
+//            Integer curWeight = mst.getTotalWeight();
+//            if (curWeight.compareTo(minWeight) > 0) {
+//                minWeight = curWeight;
+//                bestMST = mst;
+//            }
+//        }
+        
+        System.out.println(minWeight);
         
 //        LinkedList<LinkedList<Integer>> minPath = graph.shortestPath();
 //        

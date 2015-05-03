@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -51,6 +52,7 @@ public class PrimMST {
             this.distance[i] = Integer.MAX_VALUE;
         }
     }
+
     /**
      * Gets the MST sourced from the start node using Prim's Algorithm.
      * @param vtx The start vertex. 
@@ -97,4 +99,5 @@ public class PrimMST {
         
         return output;
     }
+    
 }

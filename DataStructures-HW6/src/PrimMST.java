@@ -34,8 +34,8 @@ public class PrimMST {
     AdaptableMinHeap lowestDistance;
     
     /**
-     * Constructor for DijkstraMinPath. 
-     * @param input The graph we're finding MinPaths in.
+     * Constructor for PrimMST.
+     * @param input The graph we're finding PrimMST.
      */
     PrimMST(AdjacencyListGraph input) {
         this.graph = input;

@@ -1,5 +1,8 @@
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,6 +22,7 @@ public final class BackyardDig {
      */
     private BackyardDig() {
     }
+    
 
     /**
      * The BackyardDig main method.
@@ -26,9 +30,10 @@ public final class BackyardDig {
      * @param args
      *            input file including square network size, and set of vertecies
      *            with work (weight) of edge.
+     * @throws IOException 
      * 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // 1. Read the input file
         // 2. Construct graph based on input file
         // 3. Find shortest path for all n vertecies 
@@ -36,8 +41,10 @@ public final class BackyardDig {
         // 4. Compare work and choose overall minimized work path
         // 5. Construct output file based on above path
         
-        int rows;
-        int cols;
+        
+        int rows = 0;
+        int cols = 0;
+        
         HashMap<Integer, Integer> vtcs = new HashMap<Integer, Integer>();
         GraphWrapper<Integer> graph =
                 new GraphWrapper<Integer>(new AdjacencyListGraph(0));
@@ -93,23 +100,38 @@ public final class BackyardDig {
         }
         
         System.out.println("Least Work: " + minWeight);
-        for (LinkedList<Integer> adjVtcs : bestMST) {
-            ListIterator<Integer> listIterator
-                = adjVtcs.listIterator();
         System.out.println(bestMST.getAdjList());
         
+        FileWriter writer = new FileWriter("OutputTest.txt");
+        BufferedWriter bw = new BufferedWriter(writer);
         
-//        LinkedList<LinkedList<Integer>> minPath = graph.shortestPath();
-//        
-//        System.out.println("Shortest Path: ");
-//        ListIterator<LinkedList<Integer>> listIterator = minPath.listIterator();
-//        int work = listIterator.next().get(2);
-//        System.out.println(work);
-//        while (listIterator.hasNext()) {
-//            int firstPoint = listIterator.next().get(0);
-//            int nextPoint = listIterator.next().get(3);
-//            System.out.println(firstPoint + " " + nextPoint);
-//        } 
+        ArrayList<LinkedList<Integer>> tempAdjList = bestMST.getAdjList();
+        
+        for (LinkedList<Integer> adjVtcs : tempAdjList) {
+            for (int i = 0; i < adjVtcs.size(); i++) {
+                if (tempAdjList.get(adjVtcs.get(i))
+                        != null) {
+                    tempAdjList.get(adjVtcs.get(i)).remove();
+                }
+                int xStart = i / cols;
+                int yStart = (i % cols) - 1;
+                int xEnd = adjVtcs.get(i) / cols;
+                int yEnd = (adjVtcs.get(i) % cols) - 1;
+                
+                try {
+                    String first =
+                            new String("(" + xStart + ", " + yStart + ")");
+                    String second = new String("(" + xEnd + ", " + yEnd + ")");
+                    System.out.println(first);
+                    System.out.println(second);
+                    bw.write(first);
+                    bw.write(second);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
     }
     
     

@@ -178,6 +178,6 @@ public class AdjacencyListGraph {
                     this.graph.indexOf(adjVtcs), listIterator.next());
             totalWeight += curWeight;
         }
-        return totalWeight / 2; //Might need to change 
+        return totalWeight; //Might need to change 
     }
 }

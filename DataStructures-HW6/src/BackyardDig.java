@@ -78,28 +78,26 @@ public final class BackyardDig {
             System.out.println("File not found.");
         }   
         
-        AdjacencyListGraph bestMST;
+        AdjacencyListGraph bestMST = null;
         Integer minWeight = Integer.MAX_VALUE;
         
-        PrimMST calcMST = new PrimMST(graph.getGraph());
-        AdjacencyListGraph mst = calcMST.getMST(13);
-        Integer curWeight = mst.getTotalWeight();
-        minWeight = curWeight;
-        bestMST = mst;
-        
         //find the best MST of all starting points
-//        for (int vtx : vtcs.values()) {
-//            System.out.println(vtx);
-//            PrimMST calcMST = new PrimMST(graph.getGraph());
-//            AdjacencyListGraph mst = calcMST.getMST(vtx);
-//            Integer curWeight = mst.getTotalWeight();
-//            if (curWeight.compareTo(minWeight) > 0) {
-//                minWeight = curWeight;
-//                bestMST = mst;
-//            }
-//        }
+        for (int vtx : vtcs.values()) {
+            PrimMST calcMST = new PrimMST(graph.getGraph());
+            AdjacencyListGraph mst = calcMST.getMST(vtx - 1);
+            Integer curWeight = mst.getTotalWeight();
+            if (curWeight.compareTo(minWeight) < 0) {
+                minWeight = curWeight;
+                bestMST = mst;
+            }
+        }
         
-        System.out.println(minWeight);
+        System.out.println("Least Work: " + minWeight);
+        for (LinkedList<Integer> adjVtcs : bestMST) {
+            ListIterator<Integer> listIterator
+                = adjVtcs.listIterator();
+        System.out.println(bestMST.getAdjList());
+        
         
 //        LinkedList<LinkedList<Integer>> minPath = graph.shortestPath();
 //        

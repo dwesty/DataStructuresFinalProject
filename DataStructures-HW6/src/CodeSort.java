@@ -49,7 +49,7 @@ public final class CodeSort {
         Scanner fileScanner;
         try {
             fileScanner = new Scanner(new File(
-                    cs.getClass().getResource("smallSorted.txt").getFile()));
+                    cs.getClass().getResource(args[0]).getFile()));
             while (fileScanner.hasNext()) {
                 sortedDict.add(fileScanner.next());
             }
@@ -88,7 +88,7 @@ public final class CodeSort {
         
         try {
             fileScanner = new Scanner(new File(
-                    cs.getClass().getResource("unsorted1.txt").getFile()));
+                    cs.getClass().getResource(args[1]).getFile()));
             while (fileScanner.hasNext()) {
                 unsortedList.add(
                         new StringWrapper(fileScanner.next(), precedence));
@@ -101,7 +101,7 @@ public final class CodeSort {
         Collections.sort(unsortedList);
         
         try {
-            File file = new File("sorted1.txt");
+            File file = new File(args[2]);
             BufferedWriter output = new BufferedWriter(new FileWriter(file));
             
             for (StringWrapper x : unsortedList) {

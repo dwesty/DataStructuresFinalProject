@@ -113,6 +113,21 @@ public class GraphWrapper<T> {
     }
     
     /**
+    * Returns a MST from the stored graph.
+    * @param vtx The source vtx.
+    * @return The MST.
+    */
+    public AdjacencyListGraph getMST(T vtx) {
+        AdjacencyListGraph mst;
+        
+        PrimMST primmer = new PrimMST(this.graph);
+        
+        mst = primmer.getMST(this.vtcs.get(vtx));
+        
+        return mst;
+    }
+    
+    /**
      * Returns the weight between the edges. 
      * @param vtx1 The first vertex.
      * @param vtx2 The second vertex.

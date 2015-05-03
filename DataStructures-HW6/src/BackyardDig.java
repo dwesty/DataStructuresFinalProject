@@ -107,16 +107,17 @@ public final class BackyardDig {
         
         ArrayList<LinkedList<Integer>> tempAdjList = bestMST.getAdjList();
         
-        int v = 0;
+        int curVert = 0;
         for (LinkedList<Integer> adjVtcs : tempAdjList) {
             for (int i = 0; i < adjVtcs.size(); i++) {
-                if (tempAdjList.get(adjVtcs.get(i))
-                        != null) {
-                    tempAdjList.get(adjVtcs.get(i)).remove();
-                }
-                int xStart = v / cols - 1;
-                int yStart = (v % cols);
-                int xEnd = adjVtcs.get(i) / cols - 1;
+                int curNeighbor = adjVtcs.get(i);
+                int curVertIndexInNeighbor =
+                        tempAdjList.get(curNeighbor).indexOf(curVert);
+                tempAdjList.get(curNeighbor).remove(curVertIndexInNeighbor);
+                
+                int xStart = curVert / cols;
+                int yStart = (curVert % cols);
+                int xEnd = adjVtcs.get(i) / cols;
                 int yEnd = (adjVtcs.get(i) % cols);
                 
                 try {
@@ -125,13 +126,13 @@ public final class BackyardDig {
                     String second = new String("(" + xEnd + ", " + yEnd + ")");
                     System.out.print(first);
                     System.out.println(second);
-                    bw.write(first);
-                    bw.write(second);
+                    bw.write(first + " ");
+                    bw.write(second + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            v++;
+            curVert++;
         }
         
     }
